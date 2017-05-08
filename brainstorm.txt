@@ -1,0 +1,13 @@
+cookie table:
+    cookieID
+    cookiename
+    allergen flag
+
+order table:
+    orderID
+    customerID
+    trucknum
+    cookieID
+    numberOfBoxes
+
+

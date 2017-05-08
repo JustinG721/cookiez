@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}    
+      
+
+    <div class = 'center'>
+        <h1>Welcome to Cookiez! The best place in the world to buy fake cookies!<br /> 
+        Check our selection out below.</h1>
+    </div>
+    
+    {% for cookie in cookies %}
+    
+      <div class="col-md-3 col-md-5 card" style = 'padding-top: 50px;'>
+        <div class="thumbnail">
+            <img style = 'height: 381px; width: 315;' src='{{cookie.imagePath.url}}'/>
+            <div class="caption center">
+                <h3>{{cookie.name}}</h3>
+                <p>{{cookie.description}}</p>
+                <div class="center">
+                  <!--
+                  <span class="input-group-addon" id="basic-addon1">Select desired quantity</span>
+                  <input type="number" min = '0' max = '99' class="form-control" placeholder="0" aria-describedby="basic-addon1">
+                  -->
+                  <form action="/add_cart/" method="POST" align="center">
+                    {% csrf_token %}
+                    <div align = "center">
+                    <span class="input-group-addon" id="basic-addon1">Select desired quantity</span>
+                    <input type="add_cart" min = '0' max = '99' class="form-control" placeholder="0" aria-describedby="basic-addon1">
+                    </div>
+                    <div align = "center">
+                    <p style = 'padding-top: 10px'><input type="submit" value="Add To Cart" class="btn btn-primary"/></p>
+                    </div>
+                  </form>
+                </div>
+                <!---<p style = 'padding-top: 10px'><a href="#" class="btn btn-primary" role="button">Add to Cart</a></p>--->
+
+          </div>
+        </div>
+      </div>
+
+      
+        </div>
+      </div>
+    {% endfor %}
+{% endblock %}
