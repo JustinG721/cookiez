@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.template import loader
 from django.http import HttpResponse, HttpResponseRedirect
-from django.contrib.auth import views as auth_views
+from django.contrib.auth import login, authenticate, views as auth_views
+from django.contrib.auth.forms import UserCreationForm
 from cookiez.Customer import insertCustomer, retrieveCustomer
 from django.shortcuts import render, redirect
 from django.template import RequestContext
@@ -25,13 +26,25 @@ def test(request):
     customer = retrieveCustomer()
     return(HttpResponse('done'))
     
-def login(request):
-    c = {}
-    c.update(csrf(request))
-    return render(request, 'login.html', c)
+def sign_up(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect('index')
+    else:
+        form = UserCreationForm()
+    return render(request, 'signup.html', {'form': form}, context_instance = RequestContext(request))
 
 def cart(request):
     return (render(request, 'cart.html'))
+
+#def sign_in(request):
+ #   return (render(request, 'sign_in.html'))
     
 def add_cart(request):
     print('cums')
